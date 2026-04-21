@@ -9,14 +9,14 @@ pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 
-This installs spaCy and Hugging Face transformers for the first time in this course, and downloads the spaCy English language model.
+This installs spaCy for the first time in this course and downloads the spaCy English language model.
 
 ## Tasks
 
 Complete the three functions in `drill.py`:
-1. `preprocess_text` — Lowercase, remove punctuation, filter stop words
-2. `extract_linguistic_annotations` — Extract (token, POS, dependency) tuples with spaCy
-3. `extract_entities` — Extract named entities using spaCy NER
+1. `preprocess_text(text, stop_words)` — Tokenize with spaCy, drop punctuation/whitespace, lowercase, filter stop words
+2. `extract_linguistic_annotations(text)` — Extract (token, POS, dependency) tuples with spaCy
+3. `extract_entities(text)` — Extract named entities using spaCy Named Entity Recognition
 
 ## Submission
 

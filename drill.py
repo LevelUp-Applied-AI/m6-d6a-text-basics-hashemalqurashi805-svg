@@ -14,10 +14,11 @@ nlp = spacy.load("en_core_web_sm")
 
 
 def preprocess_text(text, stop_words):
-    """Preprocess a raw text string for NLP analysis.
+    """Preprocess a raw text string for NLP analysis using spaCy.
 
-    Steps: lowercase, remove punctuation, tokenize into words,
-    remove stop words from the provided list, return cleaned tokens.
+    Steps: run the text through the module-level `nlp` pipeline,
+    drop punctuation and whitespace tokens, lowercase each token,
+    and remove any that appear in the provided stop word set.
 
     Args:
         text: Raw text string (may contain punctuation, mixed case,
@@ -28,8 +29,8 @@ def preprocess_text(text, stop_words):
         List of cleaned, lowercase token strings with punctuation
         and stop words removed.
     """
-    # TODO: Lowercase the text, tokenize with spaCy, filter out
-    #       punctuation tokens and stop words
+    # TODO: Call nlp(text), iterate tokens, skip token.is_punct and
+    #       token.is_space, lowercase token.text, drop stop words
     pass
 
 
