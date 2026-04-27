@@ -10,80 +10,84 @@ Test your work: the autograder runs automatically when you open a PR.
 
 import spacy
 
+# تحميل موديل اللغة الإنجليزية
 nlp = spacy.load("en_core_web_sm")
 
 
 def preprocess_text(text, stop_words):
-    """Preprocess a raw text string for NLP analysis using spaCy.
-
-    Steps: run the text through the module-level `nlp` pipeline,
-    drop punctuation and whitespace tokens, lowercase each token,
-    and remove any that appear in the provided stop word set.
-
-    Args:
-        text: Raw text string (may contain punctuation, mixed case,
-              and non-ASCII characters).
-        stop_words: A set of lowercase stop words to remove.
-
-    Returns:
-        List of cleaned, lowercase token strings with punctuation
-        and stop words removed.
     """
-    # TODO: Call nlp(text), iterate tokens, skip token.is_punct and
-    #       token.is_space, lowercase token.text, drop stop words
-    pass
+    المهمة 1: معالجة مقطع نصي مسبقاً
+    تنظيف النص من علامات الترقيم، المساحات، وتحويله لأحرف صغيرة مع حذف كلمات التوقف.
+    """
+    # معالجة النص عبر خط أنابيب spaCy
+    doc = nlp(text)
+    
+    # فلترة الرموز: استبعاد الترقيم والمساحات وكلمات التوقف
+    cleaned_tokens = [
+        token.text.lower() 
+        for token in doc 
+        if not token.is_punct and not token.is_space and token.text.lower() not in stop_words
+    ]
+    
+    return cleaned_tokens
 
 
 def extract_linguistic_annotations(text):
-    """Extract linguistic annotations for each token in the text.
-
-    Args:
-        text: A text string to analyze.
-
-    Returns:
-        List of (token_text, pos_tag, dep_label) tuples — one per
-        token. Use spaCy's .text, .pos_, and .dep_ attributes.
     """
-    # TODO: Process text with spaCy and build annotation tuples
-    pass
+    المهمة 2: استخراج التعليقات اللغوية
+    استخراج نص الرمز، وسم أجزاء الكلام (POS)، وتسمية التبعية (Dependency).
+    """
+    doc = nlp(text)
+    
+    # بناء قائمة من الأرباع (Tuples) لكل رمز
+    annotations = [
+        (token.text, token.pos_, token.dep_) 
+        for token in doc
+    ]
+    
+    return annotations
 
 
 def extract_entities(text):
-    """Extract named entities from text using spaCy NER.
-
-    Args:
-        text: A text string to analyze.
-
-    Returns:
-        List of (entity_text, entity_label) tuples sorted by
-        appearance order. Use doc.ents and each entity's .text
-        and .label_ attributes.
     """
-    # TODO: Process text with spaCy and extract entity tuples
-    pass
+    المهمة 3: تشغيل NER وإخراج الصيغة
+    استخلاص الكيانات المسماة وتصنيفاتها من النص.
+    """
+    doc = nlp(text)
+    
+    # استخراج النص والوسم الخاص بكل كيان (مثل GPE, ORG, DATE)
+    entities = [
+        (ent.text, ent.label_) 
+        for ent in doc.ents
+    ]
+    
+    return entities
 
 
 if __name__ == "__main__":
+    # نص العينة للاختبار
     sample = (
         "The IPCC released its latest report in Geneva on March 20, 2024. "
         "Dr. Ahmad presented findings on Jordan's climate adaptation strategy "
         "at the COP28 conference in Dubai."
     )
+    
+    # قائمة كلمات التوقف
     stop_words = {"the", "a", "an", "in", "on", "at", "its", "of", "and", "is"}
 
-    # Task 1: Preprocess
+    # تشغيل المهمة 1
     tokens = preprocess_text(sample, stop_words)
     if tokens is not None:
         print(f"Cleaned tokens ({len(tokens)}): {tokens[:10]}...")
 
-    # Task 2: Linguistic annotations
+    # تشغيل المهمة 2
     annotations = extract_linguistic_annotations(sample)
     if annotations is not None:
         print(f"\nAnnotations ({len(annotations)} tokens):")
         for tok, pos, dep in annotations[:5]:
             print(f"  {tok:15s} {pos:8s} {dep}")
 
-    # Task 3: Named entities
+    # تشغيل المهمة 3
     entities = extract_entities(sample)
     if entities is not None:
         print(f"\nEntities ({len(entities)}):")
